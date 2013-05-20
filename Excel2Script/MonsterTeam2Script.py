@@ -87,4 +87,4 @@ def writeMonsterTeamScript(mt_list, file):
 			team_node.append(m_node);
 		teams_root.append(team_node);
 	#ET.dump(teams_root);
-	tree.write(file);
+	tree.write(file, "utf-8", True, method="xml");
