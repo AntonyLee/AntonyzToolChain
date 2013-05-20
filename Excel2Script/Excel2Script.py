@@ -1,15 +1,15 @@
 import os;
 import xlrd;
 from optparse import OptionParser
+import MonsterTeam2Script
 
-def readBookMonsterTeam(book):
-	worksheet = book.sheet_by_index(0);
-	print worksheet;
+
+def collectData(workbook):
+	MonsterTeam2Script.collectMonsterTeamData(workbook);
 
 def readXlsFile(xls_path):
-	book = xlrd.open_workbook(xls_path);
-	readBookMonsterTeam(book);
-
+	workbook = xlrd.open_workbook(xls_path);
+	return workbook;
 
 def main():
 	parser = OptionParser();
@@ -24,10 +24,10 @@ def main():
 
 	if options.output_file == None:
 		options.output_file = os.path.splitext(options.file)[0] + '.xml';
-	readXlsFile(options.file);
+	workbook = readXlsFile(options.file);
+	collectData(workbook);
 
 	pass;
-
 
 if __name__ == '__main__':
 	main()

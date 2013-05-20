@@ -3,7 +3,6 @@ import shutil;
 from filecmp import dircmp;
 from optparse import OptionParser;
 
-
 g_files_synced_left_2_right = [];
 g_files_synced_right_2_left = [];
 
