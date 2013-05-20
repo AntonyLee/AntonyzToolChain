@@ -1,7 +1,7 @@
 #coding=utf-8
 import os;
 import xlrd;
-import lxml;
+import xml.etree.ElementTree as ET;
 
 mt_data_col = {
 	"stage_name" : 2,
@@ -29,6 +29,8 @@ class MonsterEntry():
 class MonsterTeamEntry():
 	_team_id = 0;
 	_monsters = [];
+	_matrix_id = 0;
+	_matrix_level = 1;
 
 	def __init__(self):
 		_monsters = [];
@@ -68,4 +70,21 @@ def collectMonsterTeamData(workbook):
 		me._pos 		= _UNI2I(worksheet.cell(rowx, mt_data_col["mt_monster_pos"]).value);
 		mte._monsters.append(me);	
 
-def writeMonsterTeamScript(mt_list):
+	return mte_list;
+
+def writeMonsterTeamScript(mt_list, file):
+	teams_root = ET.Element("teams");
+	tree = ET.ElementTree(teams_root);
+	for mt in mt_list:
+		team_node = ET.Element("team");
+		team_node.set("id", str(mt._team_id));
+		team_node.set("matrix_id", str(mt._matrix_id));
+		team_node.set("matrix_level", str(mt._matrix_level));
+		for m in mt._monsters:
+			m_node = ET.Element("monster");
+			m_node.set("id", str(m._template_id));
+			m_node.set("pos", str(m._pos));
+			team_node.append(m_node);
+		teams_root.append(team_node);
+	#ET.dump(teams_root);
+	tree.write(file);

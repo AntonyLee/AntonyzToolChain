@@ -5,7 +5,10 @@ import MonsterTeam2Script
 
 
 def collectData(workbook):
-	MonsterTeam2Script.collectMonsterTeamData(workbook);
+	return MonsterTeam2Script.collectMonsterTeamData(workbook);
+
+def writeData(data, file):
+	MonsterTeam2Script.writeMonsterTeamScript(data, file);
 
 def readXlsFile(xls_path):
 	workbook = xlrd.open_workbook(xls_path);
@@ -25,7 +28,8 @@ def main():
 	if options.output_file == None:
 		options.output_file = os.path.splitext(options.file)[0] + '.xml';
 	workbook = readXlsFile(options.file);
-	collectData(workbook);
+	data = collectData(workbook);
+	writeData(data, options.output_file);
 
 	pass;
 
